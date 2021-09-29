@@ -8,6 +8,7 @@
     "build": "babel src/ --out-dir .dist/"
   },
   "dependencies": {
+    "@prisma/client": "^3.1.1",
     "express": "^4.17.1"
   },
   "devDependencies": {
