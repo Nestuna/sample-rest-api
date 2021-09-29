@@ -26,36 +26,33 @@ api.post('/', async (request, response) => {
 })
 
 /** PUT /api/users/ > modify user */
-api.put('/', async (request, response) => {
+api.put('/:id', async (request, response) => {
+  const { username } = request.body
+  const { id } = request.params
   try {
-    const { username, email  } = request.body
     await prisma.user.update({
-      where: {
-        email: email
-      },
+      where: { id: parseInt(id) },
       data: {
         username: username
       }
     })
-    return response.json({data : {message: `Username of ${email} modified`}})
+    return response.json({data : {message: `Username of ${id} modified`}})
   } catch(e) {
-    console.error(`Failed modify use ${email}`)
-    return response.json({data: {message: `Failed to modify username for ${email}`}})
+    console.error(`Failed modify user ${id}`)
+    return response.json({data: {message: `Failed to modify username for ${id}`}})
   }
 })
 
-api.delete('/', async (request, response) => {
+api.delete('/:id', async (request, response) => {
+  const { id  } = request.params
   try {
-    const { email  } = request.body
     await prisma.user.delete({
-      where: {
-        email: email
-      }
+      where: { id: parseInt(id) }
     })
-    return response.json({data : {message: `${email} deleted`}})
+    return response.json({data : {message: `user ${id} deleted`}})
   } catch(e) {
-    console.error(`Failed modify use ${email}`)
-    return response.json({data: {message: `${email} deleted`}})
+    console.error(`Failed user ${id}`)
+    return response.json({data: {message: `user ${id} deleted`}})
   }
 })
 
